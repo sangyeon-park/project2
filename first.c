@@ -732,390 +732,644 @@ void Print_a(struct main_struct_ptr *data_ptr){
    printf("\n");
 }
 
+void Sort_m_g(struct main_struct_ptr *data_ptr){ //영화이름대로 정렬
+	struct movie *current, **ptr;
+	int i, j,cnt;
 
-void Sort_m_g(struct main_struct_ptr *data_ptr){
-   struct movie *current, **ptr;
-   int i, j,cnt;
-
-   if(data_ptr->movie_ptr == NULL){
-      printf("데이타가 없습니다.\n");
-      return;
-   }
-
-   current = data_ptr->movie_ptr, cnt = 1;
-
-   while(current->next != NULL){
-      cnt++;
-      current = current->next;
-   }
-
-   ptr = (struct movie**)malloc(sizeof(struct movie*) * cnt);
-   for(i = 0, current = data_ptr->movie_ptr; i < cnt; i++, current = current->next)
-      *(ptr+i) = current;
-   for(i = 0; i < cnt; i++){
-      for(j = i+1; j < cnt; j++){
-         if(strcmp((*(ptr+i))->genre , (*(ptr+j))->genre) > 0){
-            current = *(ptr+i);
-            *(ptr+i) = *(ptr+j);
-            *(ptr+j) = current;
-         }
-      }
-   }
-
-   for(data_ptr->movie_ptr = *(ptr+0), current = data_ptr->movie_ptr, i = 1; i < cnt; i++, current = current->next){
-      current->next = *(ptr+i);
-   }
-   current->next = NULL;
-   printf("정렬이 완료되었습니다.\n");
-   free(ptr);
-}
-
-void Sort_m_d(struct main_struct_ptr *data_ptr){
-   struct movie *current, **ptr;
-   int i, j,cnt;
-
-   if(data_ptr->movie_ptr == NULL){
-      printf("데이타가 없습니다.\n");
-      return;
-   }
-
-   current = data_ptr->movie_ptr, cnt = 1;
-
-   while(current->next != NULL){
-      cnt++;
-      current = current->next;
-   }
-   ptr = (struct movie**)malloc(sizeof(struct movie*) * cnt);
-   for(i = 0, current = data_ptr->movie_ptr; i < cnt; i++, current = current->next)
-      *(ptr+i) = current;
-   for(i = 0; i < cnt; i++){
-      for(j = i+1; j < cnt; j++){
-         if(strcmp((*(ptr+i))->director_m->name , (*(ptr+j))->director_m->name) > 0){
-            current = *(ptr+i);
-            *(ptr+i) = *(ptr+j);
-            *(ptr+j) = current;
-         }
-      }
-   }
-   for(data_ptr->movie_ptr = *(ptr+0), current = data_ptr->movie_ptr, i = 1; i < cnt; i++, current = current->next){
-      current->next = *(ptr+i);
-   }
-   current->next = NULL;
-   printf("정렬이 완료되었습니다.\n");
-   free(ptr);
-}
-
-void Sort_m_y(struct main_struct_ptr *data_ptr){
-   struct movie *current, **ptr;
-   int i, j,cnt;
-
-   if(data_ptr->movie_ptr == NULL){
-      printf("데이타가 없습니다.\n");
-      return;
-   }
-
-   current = data_ptr->movie_ptr, cnt = 1;
-
-   while(current->next != NULL){
-      cnt++;
-      current = current->next;
-   }
-   ptr = (struct movie**)malloc(sizeof(struct movie*) * cnt);
-   for(i = 0, current = data_ptr->movie_ptr; i < cnt; i++, current = current->next)
-      *(ptr+i) = current;
-   for(i = 0; i < cnt; i++){
-      for(j = i+1; j < cnt; j++){
-         if((*(ptr+i))->year > (*(ptr+j))->year) {
-            current = *(ptr+i);
-            *(ptr+i) = *(ptr+j);
-            *(ptr+j) = current;
-         }
-      }
-   }
-   for(data_ptr->movie_ptr = *(ptr+0), current = data_ptr->movie_ptr, i = 1; i < cnt; i++, current = current->next){
-      current->next = *(ptr+i);
-   }
-   current->next = NULL;
-   printf("정렬이 완료되었습니다.\n");
-   free(ptr);
-}
-
-void Sort_m_r(struct main_struct_ptr *data_ptr){
-   struct movie *current, **ptr;
-   int i, j,cnt;
-
-   if(data_ptr->movie_ptr == NULL){
-      printf("데이타가 없습니다.\n");
-      return;
-   }
-
-   current = data_ptr->movie_ptr, cnt = 1;
-
-   while(current->next != NULL){
-      cnt++;
-      current = current->next;
-   }
-   ptr = (struct movie**)malloc(sizeof(struct movie*) * cnt);
-   for(i = 0, current = data_ptr->movie_ptr; i < cnt; i++, current = current->next)
-      *(ptr+i) = current;
-   for(i = 0; i < cnt; i++){
-      for(j = i+1; j < cnt; j++){
-         if((*(ptr+i))->movie_time > (*(ptr+j))->movie_time){
-            current = *(ptr+i);
-            *(ptr+i) = *(ptr+j);
-            *(ptr+j) = current;
-         }
-      }
-   }
-   for(data_ptr->movie_ptr = *(ptr+0), current = data_ptr->movie_ptr, i = 1; i < cnt; i++, current = current->next){
-      current->next = *(ptr+i);
-   }
-   current->next = NULL;
-   printf("정렬이 완료되었습니다.\n");
-   free(ptr);
-}
-
-void Sort_m_a(struct main_struct_ptr *data_ptr){
-   struct movie *current, **ptr;
-   int i, j,cnt;
-
-   if(data_ptr->movie_ptr == NULL){
-      printf("데이타가 없습니다.\n");
-      return;
-   }
-
-   current = data_ptr->movie_ptr, cnt = 1;
-
-   while(current->next != NULL){
-      cnt++;
-      current = current->next;
-   }
-   ptr = (struct movie**)malloc(sizeof(struct movie*) * cnt);
-   for(i = 0, current = data_ptr->movie_ptr; i < cnt; i++, current = current->next)
-      *(ptr+i) = current;
-   for(i = 0; i < cnt; i++){
-      for(j = i+1; j < cnt; j++){
-         if(strcmp((*(ptr+i))->actor_m->name , (*(ptr+j))->actor_m->name) > 0){
-            current = *(ptr+i);
-            *(ptr+i) = *(ptr+j);
-            *(ptr+j) = current;
-         }
-      }
-   }
-   for(data_ptr->movie_ptr = *(ptr+0), current = data_ptr->movie_ptr, i = 1; i < cnt; i++, current = current->next){
-      current->next = *(ptr+i);
-   }
-   current->next = NULL;
-   printf("정렬이 완료되었습니다.\n");
-   free(ptr);
-}
-
-void Sort_m_t(struct main_struct_ptr *data_ptr){
-    struct movie *current, **ptr;
-    int i, j,cnt;
-
-    if(data_ptr->movie_ptr == NULL){
-        printf("데이타가 없습니다.\n");
-        return;
-    }
-
-    current = data_ptr->movie_ptr, cnt = 1;
-
-    while(current->next != NULL){
-        cnt++;
-        current = current->next;
-    }
-
-    ptr = (struct movie**)malloc(sizeof(struct movie*) * cnt);
-    for(i = 0, current = data_ptr->movie_ptr; i < cnt; i++, current = current->next)
-        *(ptr+i) = current;
-    for(i = 0; i < cnt; i++){
-        for(j = i+1; j < cnt; j++){
-            if(strcmp((*(ptr+i))->title , (*(ptr+j))->title) > 0){
-                current = *(ptr+i);
-                *(ptr+i) = *(ptr+j);
-                *(ptr+j) = current;
-            }
-        }
-    }
-
-    for(data_ptr->movie_ptr = *(ptr+0), current = data_ptr->movie_ptr, i = 1; i < cnt; i++, current = current->next){
-        current->next = *(ptr+i);
-    }
-    current->next = NULL;
-    printf("정렬이 완료되었습니다.\n");
-    free(ptr);
-}
-
-void Sort_d_n(struct main_struct_ptr *data_ptr){
-   struct director *current, **ptr; //정렬할때 이용하는 변수들
-   int i, j,cnt;
-
-   if(data_ptr->director_ptr == NULL){
-      printf("데이타가 없습니다.\n");
-      return;
-   }
-
-   current = data_ptr->director_ptr;
-   cnt = 1; // 레코드가 몇개인지 알려줌.
-
-   while(current->next != NULL){
-      cnt++;
-      current = current->next;
-   }
-
-   ptr = (struct director**)malloc(sizeof(struct director*) * cnt);
-   for(i = 0, current = data_ptr->director_ptr; i < cnt; i++, current = current->next)
-      *(ptr+i) = current; //이중포인터를 이용하여 파일저장
-   for(i = 0; i < cnt; i++){
-      for(j = i+1; j < cnt; j++){
-         if(strcmp((*(ptr+i))->name , (*(ptr+j))->name) > 0){ //앞에 있는 이름이 더 크다면 정렬해줌. 나머지 Sort_함수도 이와같음.
-            current = *(ptr+i);
-            *(ptr+i) = *(ptr+j);
-            *(ptr+j) = current;
-         }
-      }
-   }
-
-   for(data_ptr->director_ptr = *(ptr+0), current = data_ptr->director_ptr, i = 1; i < cnt; i++, current = current->next){
-      current->next = *(ptr+i); //위에서 이중포인터에 저장해둔것을 다시 원래파일에 저장.
-   }
-   current->next = NULL;
-   printf("정렬이 완료되었습니다.\n");
-   free(ptr);
-}
-
-void Sort_d_s(struct main_struct_ptr *data_ptr){
-   struct director *current, **ptr; //정렬할때 이용하는 변수들
-   int i, j,cnt;
-
-   if(data_ptr->director_ptr == NULL){
-      printf("데이타가 없습니다.\n");
-      return;
-   }
-
-   current = data_ptr->director_ptr;
-   cnt = 1; // 레코드가 몇개인지 알려줌.
-
-   while(current->next != NULL){
-      cnt++;
-      current = current->next;
-   }
-
-   ptr = (struct director**)malloc(sizeof(struct director*) * cnt);
-   for(i = 0, current = data_ptr->director_ptr; i < cnt; i++, current = current->next)
-      *(ptr+i) = current; //이중포인터를 이용하여 파일저장
-   for(i = 0; i < cnt; i++){
-      for(j = i+1; j < cnt; j++){
-         if(((*(ptr+i))->sex) > ((*(ptr+j))->sex)){ //앞에 있는 이름이 더 크다면 정렬해줌. 나머지 Sort_함수도 이와같음.
-            current = *(ptr+i);
-            *(ptr+i) = *(ptr+j);
-            *(ptr+j) = current;
-         }
-      }
-   }
-
-   for(data_ptr->director_ptr = *(ptr+0), current = data_ptr->director_ptr, i = 1; i < cnt; i++, current = current->next){
-      current->next = *(ptr+i); //위에서 이중포인터에 저장해둔것을 다시 원래파일에 저장.
-   }
-   current->next = NULL;
-   printf("정렬이 완료되었습니다.\n");
-   free(ptr);
-}
-
-void Sort_d_b(struct main_struct_ptr *data_ptr){
-   struct director *current, **ptr; //정렬할때 이용하는 변수들
-   int i, j,cnt;
-
-   if(data_ptr->director_ptr == NULL){
-      printf("데이타가 없습니다.\n");
-      return;
-   }
-
-   current = data_ptr->director_ptr;
-   cnt = 1; // 레코드가 몇개인지 알려줌.
-
-   while(current->next != NULL){
-      cnt++;
-      current = current->next;
-   }
-
-   ptr = (struct director**)malloc(sizeof(struct director*) * cnt);
-   for(i = 0, current = data_ptr->director_ptr; i < cnt; i++, current = current->next)
-      *(ptr+i) = current; //이중포인터를 이용하여 파일저장
-   for(i = 0; i < cnt; i++){
-      for(j = i+1; j < cnt; j++){
-         if(strcmp((*(ptr+i))->birth , (*(ptr+j))->birth) > 0){ //앞에 있는 이름이 더 크다면 정렬해줌. 나머지 Sort_함수도 이와같음.
-            current = *(ptr+i);
-            *(ptr+i) = *(ptr+j);
-            *(ptr+j) = current;
-         }
-      }
-   }
-
-   for(data_ptr->director_ptr = *(ptr+0), current = data_ptr->director_ptr, i = 1; i < cnt; i++, current = current->next){
-      current->next = *(ptr+i); //위에서 이중포인터에 저장해둔것을 다시 원래파일에 저장.
-   }
-   current->next = NULL;
-   printf("정렬이 완료되었습니다.\n");
-   free(ptr);
-}
-
-void Sort_d_m(struct main_struct_ptr *data_ptr){
-   struct director *current, **ptr; //정렬할때 이용하는 변수들
-   int i, j,cnt;
-
-   if(data_ptr->director_ptr == NULL){
-      printf("데이타가 없습니다.\n");
-      return;
-   }
-
-   current = data_ptr->director_ptr;
-   cnt = 1; // 레코드가 몇개인지 알려줌.
-
-   while(current->next != NULL){
-      cnt++;
-      current = current->next;
-   }
-   ptr = (struct director**)malloc(sizeof(struct director*) * cnt);
-   for(i = 0, current = data_ptr->director_ptr; i < cnt; i++, current = current->next)
-      *(ptr+i) = current; //이중포인터를 이용하여 파일저장
-   for(i = 0; i < cnt; i++){
-      for(j = i+1; j < cnt; j++){
-         if(strcmp((*(ptr+i))->movie_d->name , (*(ptr+j))->movie_d->name) > 0){ //앞에 있는 이름이 더 크다면 정렬해줌. 나머지 Sort_함수도 이와같음.
-            current = *(ptr+i);
-            *(ptr+i) = *(ptr+j);
-            *(ptr+j) = current;
-         }
-      }
-   }
-
-   for(data_ptr->director_ptr = *(ptr+0), current = data_ptr->director_ptr, i = 1; i < cnt; i++, current = current->next){
-      current->next = *(ptr+i); //위에서 이중포인터에 저장해둔것을 다시 원래파일에 저장.
-   }
-   current->next = NULL;
-   printf("정렬이 완료되었습니다.\n");
-   free(ptr);
-}
-
-
-	int main () {
-	 struct main_struct_ptr *data_ptr; // 저장될 모든 데이터들
-	 data_ptr = malloc(sizeof(struct main_struct_ptr));
-	 get_data(data_ptr); // 파일 읽고, 정보저장
-	 char *input;
-	 input = (char *)malloc(sizeof(char) * 50);
-
-
-	 Print_m(data_ptr);
-	 Sort_m_t(data_ptr);
-	 Print_m(data_ptr);
-	 //
-	 // Print_d(data_ptr);
-	 // Sort_d_m(data_ptr);
-	 // Print_d(data_ptr);
-	 //
-	 Print_a(data_ptr);
-	 // Sort_a_s(data_ptr);
-	 // Print_a(data_ptr);
+	if(data_ptr->movie_ptr == NULL){
+		printf("데이타가 없습니다.\n");
+		return;
 	}
+
+	current = data_ptr->movie_ptr, cnt = 1;
+
+	while(current->next != NULL){
+		cnt++;
+		current = current->next;
+	}
+
+	ptr = (struct movie**)malloc(sizeof(struct movie*) * cnt);
+	for(i = 0, current = data_ptr->movie_ptr; i < cnt; i++, current = current->next)
+		*(ptr+i) = current;
+	for(i = 0; i < cnt; i++){
+		for(j = i+1; j < cnt; j++){
+			if(strcmp((*(ptr+i))->genre , (*(ptr+j))->genre) > 0){
+				current = *(ptr+i);
+				*(ptr+i) = *(ptr+j);
+				*(ptr+j) = current;
+			}
+		}
+	}
+
+	for(data_ptr->movie_ptr = *(ptr+0), current = data_ptr->movie_ptr, i = 1; i < cnt; i++, current = current->next){
+		current->next = *(ptr+i);
+	}
+	current->next = NULL;
+	printf("정렬이 완료되었습니다.\n");
+	free(ptr);
+}
+
+void Sort_m_d(struct main_struct_ptr *data_ptr){ // 감독이름별로 정렬 나머지는 장르와 동일
+	struct movie *current, **ptr;
+	int i, j,cnt;
+
+	if(data_ptr->movie_ptr == NULL){
+		printf("데이타가 없습니다.\n");
+		return;
+	}
+
+	current = data_ptr->movie_ptr;
+	cnt = 1;
+
+	while(current->next != NULL){
+		cnt++;
+		current = current->next;
+	}
+	ptr = (struct movie**)malloc(sizeof(struct movie*) * cnt);
+	for(i = 0, current = data_ptr->movie_ptr; i < cnt; i++, current = current->next)
+		*(ptr+i) = current;
+	for(i = 0; i < cnt; i++){
+		for(j = i+1; j < cnt; j++){
+			if(strcmp((*(ptr+i))->director_m->name , (*(ptr+j))->director_m->name) > 0){
+				current = *(ptr+i);
+				*(ptr+i) = *(ptr+j);
+				*(ptr+j) = current;
+			}
+		}
+	}
+	for(data_ptr->movie_ptr = *(ptr+0), current = data_ptr->movie_ptr, i = 1; i < cnt; i++, current = current->next){
+		current->next = *(ptr+i);
+	}
+	current->next = NULL;
+	printf("정렬이 완료되었습니다.\n");
+	free(ptr);
+}
+
+void Sort_m_y(struct main_struct_ptr *data_ptr){ //년도별로 정렬
+	struct movie *current, **ptr;
+	int i, j,cnt;
+
+	if(data_ptr->movie_ptr == NULL){
+		printf("데이타가 없습니다.\n");
+		return;
+	}
+
+	current = data_ptr->movie_ptr, cnt = 1;
+
+	while(current->next != NULL){
+		cnt++;
+		current = current->next;
+	}
+	ptr = (struct movie**)malloc(sizeof(struct movie*) * cnt);
+	for(i = 0, current = data_ptr->movie_ptr; i < cnt; i++, current = current->next)
+		*(ptr+i) = current;
+	for(i = 0; i < cnt; i++){
+		for(j = i+1; j < cnt; j++){
+			if((*(ptr+i))->year > (*(ptr+j))->year) {
+				current = *(ptr+i);
+				*(ptr+i) = *(ptr+j);
+				*(ptr+j) = current;
+			}
+		}
+	}
+	for(data_ptr->movie_ptr = *(ptr+0), current = data_ptr->movie_ptr, i = 1; i < cnt; i++, current = current->next){
+		current->next = *(ptr+i);
+	}
+	current->next = NULL;
+	printf("정렬이 완료되었습니다.\n");
+	free(ptr);
+}
+
+void Sort_m_r(struct main_struct_ptr *data_ptr){ //영화시간별로 정렬
+	struct movie *current, **ptr;
+	int i, j,cnt;
+
+	if(data_ptr->movie_ptr == NULL){
+		printf("데이타가 없습니다.\n");
+		return;
+	}
+
+	current = data_ptr->movie_ptr, cnt = 1;
+
+	while(current->next != NULL){
+		cnt++;
+		current = current->next;
+	}
+	ptr = (struct movie**)malloc(sizeof(struct movie*) * cnt);
+	for(i = 0, current = data_ptr->movie_ptr; i < cnt; i++, current = current->next)
+		*(ptr+i) = current;
+	for(i = 0; i < cnt; i++){
+		for(j = i+1; j < cnt; j++){
+			if((*(ptr+i))->movie_time > (*(ptr+j))->movie_time){
+				current = *(ptr+i);
+				*(ptr+i) = *(ptr+j);
+				*(ptr+j) = current;
+			}
+		}
+	}
+	for(data_ptr->movie_ptr = *(ptr+0), current = data_ptr->movie_ptr, i = 1; i < cnt; i++, current = current->next){
+		current->next = *(ptr+i);
+	}
+	current->next = NULL;
+	printf("정렬이 완료되었습니다.\n");
+	free(ptr);
+}
+
+void Sort_m_a(struct main_struct_ptr *data_ptr){ //배우 이름별로 정렬
+	struct movie *current, **ptr;
+	int i, j,cnt;
+
+	if(data_ptr->movie_ptr == NULL){
+		printf("데이타가 없습니다.\n");
+		return;
+	}
+
+	current = data_ptr->movie_ptr, cnt = 1;
+
+	while(current->next != NULL){
+		cnt++;
+		current = current->next;
+	}
+	ptr = (struct movie**)malloc(sizeof(struct movie*) * cnt);
+	for(i = 0, current = data_ptr->movie_ptr; i < cnt; i++, current = current->next)
+		*(ptr+i) = current;
+	for(i = 0; i < cnt; i++){
+		for(j = i+1; j < cnt; j++){
+			if(strcmp((*(ptr+i))->actor_m->name , (*(ptr+j))->actor_m->name) > 0){
+				current = *(ptr+i);
+				*(ptr+i) = *(ptr+j);
+				*(ptr+j) = current;
+			}
+		}
+	}
+	for(data_ptr->movie_ptr = *(ptr+0), current = data_ptr->movie_ptr, i = 1; i < cnt; i++, current = current->next){
+		current->next = *(ptr+i);
+	}
+	current->next = NULL;
+	printf("정렬이 완료되었습니다.\n");
+	free(ptr);
+}
+
+void Sort_m_t(struct main_struct_ptr *data_ptr){ //영화이름대로 정렬
+	struct movie *current, **ptr;
+	int i, j,cnt;
+
+	if(data_ptr->movie_ptr == NULL){
+		printf("데이타가 없습니다.\n");
+		return;
+	}
+
+	current = data_ptr->movie_ptr, cnt = 1;
+
+	while(current->next != NULL){
+		cnt++;
+		current = current->next;
+	}
+
+	ptr = (struct movie**)malloc(sizeof(struct movie*) * cnt);
+	for(i = 0, current = data_ptr->movie_ptr; i < cnt; i++, current = current->next)
+		*(ptr+i) = current;
+	for(i = 0; i < cnt; i++){
+		for(j = i+1; j < cnt; j++){
+			if(strcmp((*(ptr+i))->title , (*(ptr+j))->title) > 0){
+				current = *(ptr+i);
+				*(ptr+i) = *(ptr+j);
+				*(ptr+j) = current;
+			}
+		}
+	}
+
+	for(data_ptr->movie_ptr = *(ptr+0), current = data_ptr->movie_ptr, i = 1; i < cnt; i++, current = current->next){
+		current->next = *(ptr+i);
+	}
+	current->next = NULL;
+	printf("정렬이 완료되었습니다.\n");
+	free(ptr);
+}
+
+void Sort_d_n(struct main_struct_ptr *data_ptr){ //감독을 이름별로 정렬
+	struct director *current, **ptr; //정렬할때 이용하는 변수들
+	int i, j,cnt;
+
+	if(data_ptr->director_ptr == NULL){
+		printf("데이타가 없습니다.\n");
+		return;
+	}
+
+	current = data_ptr->director_ptr;
+	cnt = 1; // 레코드가 몇개인지 알려줌.
+
+	while(current->next != NULL){
+		cnt++;
+		current = current->next;
+	}
+
+	ptr = (struct director**)malloc(sizeof(struct director*) * cnt);
+	for(i = 0, current = data_ptr->director_ptr; i < cnt; i++, current = current->next)
+		*(ptr+i) = current; //이중포인터를 이용하여 파일저장
+	for(i = 0; i < cnt; i++){
+		for(j = i+1; j < cnt; j++){
+			if(strcmp((*(ptr+i))->name , (*(ptr+j))->name) > 0){ //앞에 있는 이름이 더 크다면 정렬해줌. 나머지 Sort_함수도 이와같음.
+				current = *(ptr+i);
+				*(ptr+i) = *(ptr+j);
+				*(ptr+j) = current;
+			}
+		}
+	}
+
+	for(data_ptr->director_ptr = *(ptr+0), current = data_ptr->director_ptr, i = 1; i < cnt; i++, current = current->next){
+		current->next = *(ptr+i); //위에서 이중포인터에 저장해둔것을 다시 원래파일에 저장.
+	}
+	current->next = NULL;
+	printf("정렬이 완료되었습니다.\n");
+	free(ptr);
+}
+
+void Sort_d_s(struct main_struct_ptr *data_ptr){ //성별로 정렬
+	struct director *current, **ptr; //정렬할때 이용하는 변수들
+	int i, j,cnt;
+
+	if(data_ptr->director_ptr == NULL){
+		printf("데이타가 없습니다.\n");
+		return;
+	}
+
+	current = data_ptr->director_ptr;
+	cnt = 1; // 레코드가 몇개인지 알려줌.
+
+	while(current->next != NULL){
+		cnt++;
+		current = current->next;
+	}
+
+	ptr = (struct director**)malloc(sizeof(struct director*) * cnt);
+	for(i = 0, current = data_ptr->director_ptr; i < cnt; i++, current = current->next)
+		*(ptr+i) = current; //이중포인터를 이용하여 파일저장
+	for(i = 0; i < cnt; i++){
+		for(j = i+1; j < cnt; j++){
+			if(((*(ptr+i))->sex) > ((*(ptr+j))->sex)){ //앞에 있는 이름이 더 크다면 정렬해줌. 나머지 Sort_함수도 이와같음.
+				current = *(ptr+i);
+				*(ptr+i) = *(ptr+j);
+				*(ptr+j) = current;
+			}
+		}
+	}
+
+	for(data_ptr->director_ptr = *(ptr+0), current = data_ptr->director_ptr, i = 1; i < cnt; i++, current = current->next){
+		current->next = *(ptr+i); //위에서 이중포인터에 저장해둔것을 다시 원래파일에 저장.
+	}
+	current->next = NULL;
+	printf("정렬이 완료되었습니다.\n");
+	free(ptr);
+}
+
+void Sort_d_b(struct main_struct_ptr *data_ptr){ //생일별로 정렬
+	struct director *current, **ptr; //정렬할때 이용하는 변수들
+	int i, j,cnt;
+
+	if(data_ptr->director_ptr == NULL){
+		printf("데이타가 없습니다.\n");
+		return;
+	}
+
+	current = data_ptr->director_ptr;
+	cnt = 1; // 레코드가 몇개인지 알려줌.
+
+	while(current->next != NULL){
+		cnt++;
+		current = current->next;
+	}
+
+	ptr = (struct director**)malloc(sizeof(struct director*) * cnt);
+	for(i = 0, current = data_ptr->director_ptr; i < cnt; i++, current = current->next)
+		*(ptr+i) = current; //이중포인터를 이용하여 파일저장
+	for(i = 0; i < cnt; i++){
+		for(j = i+1; j < cnt; j++){
+			if(strcmp((*(ptr+i))->birth , (*(ptr+j))->birth) > 0){ //앞에 있는 이름이 더 크다면 정렬해줌. 나머지 Sort_함수도 이와같음.
+				current = *(ptr+i);
+				*(ptr+i) = *(ptr+j);
+				*(ptr+j) = current;
+			}
+		}
+	}
+
+	for(data_ptr->director_ptr = *(ptr+0), current = data_ptr->director_ptr, i = 1; i < cnt; i++, current = current->next){
+		current->next = *(ptr+i); //위에서 이중포인터에 저장해둔것을 다시 원래파일에 저장.
+	}
+	current->next = NULL;
+	printf("정렬이 완료되었습니다.\n");
+	free(ptr);
+}
+
+void Sort_d_m(struct main_struct_ptr *data_ptr){ //영화 이름대로 정렬
+	struct director *current, **ptr; //정렬할때 이용하는 변수들
+	int i, j,cnt;
+
+	if(data_ptr->director_ptr == NULL){
+		printf("데이타가 없습니다.\n");
+		return;
+	}
+
+	current = data_ptr->director_ptr;
+	cnt = 1; // 레코드가 몇개인지 알려줌.
+
+	while(current->next != NULL){
+		cnt++;
+		current = current->next;
+	}
+
+	ptr = (struct director**)malloc(sizeof(struct director*) * cnt);
+	for(i = 0, current = data_ptr->director_ptr; i < cnt; i++, current = current->next)
+		*(ptr+i) = current; //이중포인터를 이용하여 파일저장
+	for(i = 0; i < cnt; i++){
+		for(j = i+1; j < cnt; j++){
+			if(strcmp((*(ptr+i))->movie_d->name , (*(ptr+j))->movie_d->name) > 0){ //앞에 있는 이름이 더 크다면 정렬해줌. 나머지 Sort_함수도 이와같음.
+				current = *(ptr+i);
+				*(ptr+i) = *(ptr+j);
+				*(ptr+j) = current;
+			}
+		}
+	}
+
+	for(data_ptr->director_ptr = *(ptr+0), current = data_ptr->director_ptr, i = 1; i < cnt; i++, current = current->next){
+		current->next = *(ptr+i); //위에서 이중포인터에 저장해둔것을 다시 원래파일에 저장.
+	}
+	current->next = NULL;
+	printf("정렬이 완료되었습니다.\n");
+	free(ptr);
+}
+
+void Sort_a_n(struct main_struct_ptr *data_ptr){ //배우를 이름별로 정렬
+	struct actor *current, **ptr; //정렬할때 이용하는 변수들
+	int i, j,cnt;
+
+	if(data_ptr->actor_ptr == NULL){
+		printf("데이타가 없습니다.\n");
+		return;
+	}
+
+	current = data_ptr->actor_ptr;
+	cnt = 1; // 레코드가 몇개인지 알려줌.
+
+	while(current->next != NULL){
+		cnt++;
+		current = current->next;
+	}
+
+	ptr = (struct actor**)malloc(sizeof(struct actor*) * cnt);
+	for(i = 0, current = data_ptr->actor_ptr; i < cnt; i++, current = current->next)
+		*(ptr+i) = current; //이중포인터를 이용하여 파일저장
+	for(i = 0; i < cnt; i++){
+		for(j = i+1; j < cnt; j++){
+			if(strcmp((*(ptr+i))->name , (*(ptr+j))->name) > 0){ //앞에 있는 이름이 더 크다면 정렬해줌. 나머지 Sort_함수도 이와같음.
+				current = *(ptr+i);
+				*(ptr+i) = *(ptr+j);
+				*(ptr+j) = current;
+			}
+		}
+	}
+
+	for(data_ptr->actor_ptr = *(ptr+0), current = data_ptr->actor_ptr, i = 1; i < cnt; i++, current = current->next){
+		current->next = *(ptr+i); //위에서 이중포인터에 저장해둔것을 다시 원래파일에 저장.
+	}
+	current->next = NULL;
+	printf("정렬이 완료되었습니다.\n");
+	free(ptr);
+}
+
+void Sort_a_s(struct main_struct_ptr *data_ptr){ //성별로 정렬
+	struct actor *current, **ptr; //정렬할때 이용하는 변수들
+	int i, j,cnt;
+
+	if(data_ptr->actor_ptr == NULL){
+		printf("데이타가 없습니다.\n");
+		return;
+	}
+
+	current = data_ptr->actor_ptr;
+	cnt = 1; // 레코드가 몇개인지 알려줌.
+
+	while(current->next != NULL){
+		cnt++;
+		current = current->next;
+	}
+
+	ptr = (struct actor**)malloc(sizeof(struct actor*) * cnt);
+	for(i = 0, current = data_ptr->actor_ptr; i < cnt; i++, current = current->next)
+		*(ptr+i) = current; //이중포인터를 이용하여 파일저장
+	for(i = 0; i < cnt; i++){
+		for(j = i+1; j < cnt; j++){
+			if(((*(ptr+i))->sex) > ((*(ptr+j))->sex)){ //앞에 있는 이름이 더 크다면 정렬해줌. 나머지 Sort_함수도 이와같음.
+				current = *(ptr+i);
+				*(ptr+i) = *(ptr+j);
+				*(ptr+j) = current;
+			}
+		}
+	}
+
+	for(data_ptr->actor_ptr = *(ptr+0), current = data_ptr->actor_ptr, i = 1; i < cnt; i++, current = current->next){
+		current->next = *(ptr+i); //위에서 이중포인터에 저장해둔것을 다시 원래파일에 저장.
+	}
+	current->next = NULL;
+	printf("정렬이 완료되었습니다.\n");
+	free(ptr);
+}
+
+void Sort_a_b(struct main_struct_ptr *data_ptr){ // 생일별로 정렬
+	struct actor *current, **ptr; //정렬할때 이용하는 변수들
+	int i, j,cnt;
+
+	if(data_ptr->actor_ptr == NULL){
+		printf("데이타가 없습니다.\n");
+		return;
+	}
+
+	current = data_ptr->actor_ptr;
+	cnt = 1; // 레코드가 몇개인지 알려줌.
+
+	while(current->next != NULL){
+		cnt++;
+		current = current->next;
+	}
+
+	ptr = (struct actor**)malloc(sizeof(struct actor*) * cnt);
+	for(i = 0, current = data_ptr->actor_ptr; i < cnt; i++, current = current->next)
+		*(ptr+i) = current; //이중포인터를 이용하여 파일저장
+	for(i = 0; i < cnt; i++){
+		for(j = i+1; j < cnt; j++){
+			if(strcmp((*(ptr+i))->birth , (*(ptr+j))->birth) > 0){ //앞에 있는 이름이 더 크다면 정렬해줌. 나머지 Sort_함수도 이와같음.
+				current = *(ptr+i);
+				*(ptr+i) = *(ptr+j);
+				*(ptr+j) = current;
+			}
+		}
+	}
+
+	for(data_ptr->actor_ptr = *(ptr+0), current = data_ptr->actor_ptr, i = 1; i < cnt; i++, current = current->next){
+		current->next = *(ptr+i); //위에서 이중포인터에 저장해둔것을 다시 원래파일에 저장.
+	}
+	current->next = NULL;
+	printf("정렬이 완료되었습니다.\n");
+	free(ptr);
+}
+
+void Sort_a_m(struct main_struct_ptr *data_ptr){ // 영화이름대로 배우정렬
+	struct actor *current, **ptr; //정렬할때 이용하는 변수들
+	int i, j,cnt;
+
+	if(data_ptr->actor_ptr == NULL){
+		printf("데이타가 없습니다.\n");
+		return;
+	}
+
+	current = data_ptr->actor_ptr;
+	cnt = 1; // 레코드가 몇개인지 알려줌.
+
+	while(current->next != NULL){
+		cnt++;
+		current = current->next;
+	}
+
+	ptr = (struct actor**)malloc(sizeof(struct actor*) * cnt);
+	for(i = 0, current = data_ptr->actor_ptr; i < cnt; i++, current = current->next)
+		*(ptr+i) = current; //이중포인터를 이용하여 파일저장
+	for(i = 0; i < cnt; i++){
+		for(j = i+1; j < cnt; j++){
+			if(strcmp((*(ptr+i))->movie_a->name , (*(ptr+j))->movie_a->name) > 0){ //앞에 있는 이름이 더 크다면 정렬해줌. 나머지 Sort_함수도 이와같음.
+				current = *(ptr+i);
+				*(ptr+i) = *(ptr+j);
+				*(ptr+j) = current;
+			}
+		}
+	}
+
+	for(data_ptr->actor_ptr = *(ptr+0), current = data_ptr->actor_ptr, i = 1; i < cnt; i++, current = current->next){
+		current->next = *(ptr+i); //위에서 이중포인터에 저장해둔것을 다시 원래파일에 저장.
+	}
+	current->next = NULL;
+	printf("정렬이 완료되었습니다.\n");
+	free(ptr);
+}
+void Print_m_num(struct main_struct_ptr *data_ptr,char *token) // print명령을 영화에 대해서 출력해주는 함수
+{
+	int i=1;
+	struct actor_in_movie *temp;
+	struct movie *current;
+	current = data_ptr->movie_ptr;
+	// 데이터가 없는 경우
+	if(data_ptr->movie_ptr == NULL){
+		printf(" 입력된 데이터가 없습니다 \n\n");
+		return;
+	}
+	while(current != NULL){
+		temp=current->actor_m;
+		temp->actor_node=NULL;
+		if (current->serial_number==atoi(token)){ // 영화에 저장된 시리얼번호와 토큰에 저장된문자열을 숫자로 바꾸어 비교함
+			printf("%d, %s, %s\n",  current->serial_number,  current->title,  current->genre);
+			if(current->director_m->director_node!=NULL) // 영화에 대한 감독이 감독레코드에 있을경우
+			{
+				printf("D : %s(%s)\n",current->director_m->director_node->name,current->director_m->director_node->birth);
+				while(temp != NULL){
+					if(temp->actor_node!=NULL)// 영화에 대한 배우가 배우레코드에 있을경우
+					{
+						printf("A%d : %s(%s)\n",i, temp->actor_node->name, temp->actor_node->birth);
+					}
+					else{ // 영화에 대한 배우가 배우레코드에 없을경우
+						printf("A%d : %s(-)\n",i, temp->name);
+					}
+					i++;
+					temp=temp->next;
+				}
+				i=1;
+			}
+			else //영화에 대한 감독이 감독레코드에 없을경우
+			{
+				printf("D : %s(-)\n",current->director_m->name);
+				while(temp != NULL){
+					if(temp->actor_node!=NULL)
+					{
+						printf("A%d : %s(%s)\n",i, temp->actor_node->name, temp->actor_node->birth);
+					}
+					else{
+						printf("A%d : %s(-)\n",i, temp->name);
+					}
+					i++;
+					temp=temp->next;
+				}
+				i=1;
+			}
+			break;
+		}
+		else{
+			printf("\n");
+			current = current->next;
+		}
+	}
+}
+
+void Print_d_num(struct main_struct_ptr *data_ptr,char *token) //print명령을 감독에 대해서 출력해주는 함수
+{
+	struct movie_in_director *temp;
+	struct director *current;
+	current = data_ptr->director_ptr;
+
+	// 데이터가 없는 경우
+	if(data_ptr->movie_ptr == NULL){
+		printf(" 입력된 데이터가 없습니다 \n\n");
+		return;
+	}
+	while(current != NULL){
+		temp=current->movie_d;
+		temp->movie_node=NULL;
+		if(current->serial_number==atoi(token)){ //위와동일
+			printf("%d, %s, %c, %s\n",  current->serial_number, current->name,  current->sex,  current->birth);
+			while(temp != NULL){
+				if(temp->movie_node!=NULL) // 감독이 영화레코드에 있을경우
+				{
+					printf("%s, %d, %d\n",temp->movie_node->title,temp->movie_node->year,temp->movie_node->movie_time);
+				}
+				else{// 감독이 영화레코드에 없을경우
+					printf("%s, - , -\n",temp->name);
+				}
+				temp=temp->next;
+			}
+		}
+		printf("\n");
+		current = current->next;
+	}
+}
+
+void Print_a_num(struct main_struct_ptr *data_ptr, char *token) //print명령을 배우에 대해서 출력해주는 함수
+{
+	struct movie_in_actor *temp;
+	struct actor *current;
+	current = data_ptr->actor_ptr;
+
+	// 데이터가 없는 경우
+	if(data_ptr->actor_ptr == NULL){
+		printf(" 입력된 데이터가 없습니다 \n\n");
+		return;
+	}
+	while(current != NULL){
+		temp=current->movie_a;
+		temp->movie_node=NULL;
+
+		if(current->serial_number==atoi(token)){
+			printf("%d, %s, %c, %s\n",  current->serial_number, current->name,  current->sex,  current->birth);
+			while(temp != NULL){
+				if(temp->movie_node!=NULL) // 배우가 영화레코드안에 있을경우
+				{
+					printf("%s, %d, %d\n",temp->movie_node->title,temp->movie_node->year,temp->movie_node->movie_time);
+				}
+				else{ // 배우가 영화레코드안에 없을경우
+
+					printf("%s,-,-\n",temp->name);
+				}
+				temp=temp->next;
+			}
+		}
+		printf("\n");
+		current = current->next;
+	}
+}
+

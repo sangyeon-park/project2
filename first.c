@@ -1373,3 +1373,715 @@ void Print_a_num(struct main_struct_ptr *data_ptr, char *token) //print명령을
 	}
 }
 
+
+void menu(char *input, struct main_struct_ptr *data_ptr ) {
+	char *get_input;
+	char *token;   //명령어 쪼개서 저장함
+	char *menu;   //명령 부분을 담는 포인터
+	char *factor;   //인자 부분을 담는 포인터
+	char *option;   //옵션 부분을 담는 포인터
+
+	get_input = (char *)malloc(100);
+	strcpy(get_input, input);
+	token = strtok(get_input, " ");
+	menu = (char *)malloc(sizeof(char) * strlen(token) + 1);
+	strcpy(menu, token);
+	if(!strcmp(menu,"end")){
+		// movie_save_m("movie_list",data_ptr,'m');
+		if(!fopen("director_list","rb"))
+			movie_save_m("director_list",data_ptr,'d');
+		if(!fopen("actor_list","rb"))
+			movie_save_m("actor_list",data_ptr,'a');
+		exit(0);
+	}
+
+	if (!strcmp(menu, "save")) {   //menu가 save이면
+		token = strtok(NULL, " ");   //한번 더 쪼개서 m, d, a중에 하나인걸 확인
+		factor = (char *)malloc(sizeof(char) * strlen(token) + 1);
+		strcpy(factor, token);
+		printf("factor : %s\n", factor);   //factor 확인
+
+		if (!strcmp(factor, "m")){
+			if ((token = strtok(NULL, " ")) != NULL) {   //뒤에 뭐가 더 있는지 확인, 없다면 끝냄
+				if (!strcmp(token, "-f")) {   //뒤에 있는게 -f이면 옵션없이 파일이름이 있는 것이니
+					token = strtok(NULL, " ");   //파일 이름을 받기 위해서 -f 건너뛰어서 파일이름 token에 저장
+					movie_save_m(token,data_ptr,'m');
+				}
+			}
+			else
+				movie_save_m("movie_list",data_ptr,'m');//-f 가 없을 경우 기본파일에 저장.
+		}
+
+		if(!strcmp(factor,"d")){
+			if ((token = strtok(NULL, " ")) != NULL) {   //뒤에 뭐가 더 있는지 확인
+				if (!strcmp(token, "-f")) {
+					token = strtok(NULL, " ");
+					movie_save_m(token,data_ptr,'d');
+				}
+				else {   //뒤에 있는게 옵션이면
+					option = (char *)malloc(sizeof(char) * strlen(token) + 1);
+					strcpy(option, token);
+					if (strchr(option,'n')) // 각 옵션들이 무엇인지 확인
+					{
+						save_n = 1;
+					}
+					if (strchr(option,'s'))
+					{
+						save_s = 1;
+					}
+					if (strchr(option,'b'))
+					{
+						save_b = 1;
+					}
+					if (strchr(option,'m'))
+					{
+						save_m = 1;
+					}
+
+					if ((token = strtok(NULL, " ")) != NULL) {   //뒤에 뭐가 더 있는지 확인
+						token = strtok(NULL," ");
+						movie_save_m(token,data_ptr,'d');
+						save_n = 0;
+						save_s =0;
+						save_b = 0;
+						save_m = 0;
+					}
+					else // 옵션뒤에 -f없으면 화면 출력
+					{
+						movie_save_m("director_list",data_ptr,'d');
+						save_n = 0;
+						save_s =0;
+						save_b = 0;
+						save_m = 0;
+					}
+				}
+			}
+			else // d뒤에 아무것도 없음.
+			{
+				save_n = 1;
+				save_s =1;
+				save_b = 1;
+				save_m = 1;
+				movie_save_m("director_list",data_ptr,'d');
+				save_n = 1;
+				save_s =1;
+				save_b = 1;
+				save_m = 1;
+			}
+		}
+		if(!strcmp(factor,"a")){
+			if ((token = strtok(NULL, " ")) != NULL) {   //뒤에 뭐가 더 있는지 확인
+				if (!strcmp(token, "-f")) {
+					token = strtok(NULL, " ");
+					movie_save_m(token,data_ptr,'a');
+				}
+				else {   //뒤에 있는게 옵션이면
+					option = (char *)malloc(sizeof(char) * strlen(token) + 1);
+					strcpy(option, token);
+					if (strchr(option,'n')) // 각 옵션들이 무엇인지 확인
+					{
+						save_n = 1;
+					}
+					if (strchr(option,'s'))
+					{
+						save_s = 1;
+					}
+					if (strchr(option,'b'))
+					{
+						save_b = 1;
+					}
+					if (strchr(option,'m'))
+					{
+						save_m = 1;
+					}
+
+					if ((token = strtok(NULL, " ")) != NULL) {   //뒤에 뭐가 더 있는지 확인
+						token = strtok(NULL," ");
+						movie_save_m(token,data_ptr,'a');
+						save_n = 0;
+						save_s =0;
+						save_b = 0;
+						save_m = 0;
+					}
+					else // 옵션뒤에 -f없으면 화면 출력
+					{
+						movie_save_m("actor_list",data_ptr,'a');
+						save_n = 0;
+						save_s =0;
+						save_b = 0;
+						save_m = 0;
+					}
+				}
+			}
+			else // a뒤에 아무것도 없음.
+			{
+				save_n = 1;
+				save_s =1;
+				save_b = 1;
+				save_m = 1;
+				movie_save_m("actor_list",data_ptr,'a');
+				save_n = 0;
+				save_s =0;
+				save_b = 0;
+				save_m = 0;
+			}
+		}
+
+	}
+
+	if (!strcmp(menu, "sort")) {   //menu가 sort이면
+		token = strtok(NULL, " ");   //한번 더 쪼개서 m, d, a중에 하나인걸 확인
+		factor = (char *)malloc(sizeof(char) * strlen(token) + 1);
+		strcpy(factor, token);
+
+		if (!strcmp(factor, "m")){ // 인자확인
+			if ((token = strtok(NULL, " ")) != NULL) {   //뒤에 문자열이 더 있는지 확인
+				if (!strcmp(token, "-f")) {   //옵션없이 -f이면 영화이름대로 정렬
+					token = strtok(NULL, " ");
+					ofp=fopen(token,"w");
+					file_number++;
+					Sort_m_t(data_ptr);
+					Print_m(data_ptr);
+					fclose(ofp);
+				}
+				else {   //뒤에 있는게 옵션이면
+					option = (char *)malloc(sizeof(char) * strlen(token) + 1);
+					strcpy(option, token);
+					if (!strcmp(option, "t")) //옵션확인
+					{
+						Sort_m_t(data_ptr);
+					}
+					else if (!strcmp(option, "g"))
+					{
+						Sort_m_g(data_ptr);
+					}
+					else if (!strcmp(option, "d"))
+					{
+						Sort_m_d(data_ptr);
+					}
+					else if (!strcmp(option, "y"))
+					{
+						Sort_m_y(data_ptr);
+					}
+					else if (!strcmp(option, "r"))
+					{
+						Sort_m_r(data_ptr);
+					}
+					else if (!strcmp(option, "a"))
+					{
+						Sort_m_a(data_ptr);
+					}
+
+					if ((token = strtok(NULL, " ")) != NULL) {   //뒤에 뭐가 더 있는지 확인
+						token = strtok(NULL, " ");
+						ofp=fopen(token,"w");
+						file_number++;
+						Print_m(data_ptr);
+						fclose(ofp);
+					}
+					else
+					{
+						Print_m(data_ptr); // -f 없음
+						fclose(ofp);
+					}
+				}
+			}
+			else // -f 없이 인자 d만 받음
+			{
+				Sort_m_t(data_ptr);
+				Print_m(data_ptr);
+				fclose(ofp);
+			}
+		}
+		else if(!strcmp(factor, "d")){ // 나머지 인자도 m일떄와 같음
+			if ((token = strtok(NULL, " ")) != NULL) {   //뒤에 뭐가 더 있는지 확인
+				if (!strcmp(token, "-f")) {
+					token = strtok(NULL, " ");
+					ofp=fopen(token,"w");
+					file_number++;
+					Sort_d_n(data_ptr); // d뒤에 바로 -f이면 영화 이름별로 정렬해줌
+					Print_d(data_ptr);
+					fclose(ofp);
+				}
+				else {   //뒤에 있는게 옵션이면
+					option = (char *)malloc(sizeof(char) * strlen(token) + 1);
+					strcpy(option, token);
+					if (!strcmp(option, "n")) // 각 옵션들이 무엇인지 확인
+					{
+						Sort_d_n(data_ptr);
+					}
+					else if (!strcmp(option, "s"))
+					{
+						Sort_d_s(data_ptr);
+					}
+					else if (!strcmp(option, "b"))
+					{
+						Sort_d_b(data_ptr);
+					}
+					else if (!strcmp(option, "m"))
+					{
+						Sort_d_m(data_ptr);
+					}
+
+					if ((token = strtok(NULL, " ")) != NULL) {   //뒤에 뭐가 더 있는지 확인
+						token = strtok(NULL, " ");
+						ofp=fopen(token,"w");
+						file_number++;
+						Print_d(data_ptr);
+						fclose(ofp);
+					}
+					else // 옵션뒤에 -f없으면 화면 출력
+					{
+						Print_d(data_ptr);
+						fclose(ofp);
+					}
+				}
+			}
+			else // d뒤에 아무것도 없음.
+			{
+				Sort_d_n(data_ptr);
+				Print_d(data_ptr);
+				fclose(ofp);
+			}
+		}
+		else if(!strcmp(factor, "a")){
+			if ((token = strtok(NULL, " ")) != NULL) {   //뒤에 뭐가 더 있는지 확인
+				if (!strcmp(token, "-f")) {
+					token = strtok(NULL, " ");
+					ofp=fopen(token,"w");
+					file_number++;
+					Sort_a_n(data_ptr); // d뒤에 바로 -f이면 영화 이름별로 정렬해줌
+					Print_a(data_ptr);
+					fclose(ofp);
+				}
+				else {   //뒤에 있는게 옵션이면
+					option = (char *)malloc(sizeof(char) * strlen(token) + 1);
+					strcpy(option, token);
+					if (!strcmp(option, "n")) // 각 옵션들이 무엇인지 확인
+					{
+						Sort_a_n(data_ptr);
+					}
+					else if (!strcmp(option, "s"))
+					{
+						Sort_a_s(data_ptr);
+					}
+					else if (!strcmp(option, "b"))
+					{
+						Sort_a_b(data_ptr);
+					}
+					else if (!strcmp(option, "m"))
+					{
+						Sort_a_m(data_ptr);
+					}
+
+					if ((token = strtok(NULL, " ")) != NULL) {   //뒤에 뭐가 더 있는지 확인
+						token = strtok(NULL, " ");
+						ofp=fopen(token,"w");
+						file_number++;
+						Print_a(data_ptr);
+						fclose(ofp);
+					}
+					else // 옵션뒤에 -f없으면 화면 출력
+					{
+						Print_a(data_ptr);
+						fclose(ofp);
+					}
+				}
+			}
+			else // d뒤에 아무것도 없음.
+			{
+				Sort_a_n(data_ptr);
+				Print_a(data_ptr);
+				fclose(ofp);
+			}
+		}
+	}
+	else if (!strcmp(menu, "print")) { // 명령어가 print일경우..
+		token = strtok(NULL, " ");   //한번 더 쪼개서 m, d, a중에 하나인걸 확인
+		factor = (char *)malloc(sizeof(char) * strlen(token) + 1);
+		strcpy(factor, token);
+		if (!strcmp(factor, "m")){ // 인자확인
+			if ((token = strtok(NULL, " ")) != NULL) {   //뒤에 뭐가 더 있는지 확인
+				Print_m_num(data_ptr,token);
+			}
+		}
+		else if (!strcmp(factor, "d")){
+			if ((token = strtok(NULL, " ")) != NULL) {   //뒤에 뭐가 더 있는지 확인
+				Print_d_num(data_ptr,token);
+			}
+		}
+		else if (!strcmp(factor, "a")){
+			if ((token = strtok(NULL, " ")) != NULL) {   //뒤에 뭐가 더 있는지 확인
+				Print_a_num(data_ptr,token);
+			}
+		}
+	}
+}
+
+int mov(struct main_struct_ptr* data_ptr, char *s2){
+	if(strchr(s2, '?') != NULL || strchr(s2, '*') != NULL){
+		QorM_m(data_ptr, s2);
+		return 0;
+	}
+	int i  = 0;
+	while(1){
+		int ser, tit, gen, dir, yea, tim, act;
+		char *Ser, *Yea, *Tim;
+		Ser = (char*)malloc(sizeof(char*)*50);
+		Yea = (char*)malloc(sizeof(char*)*50);
+		Tim = (char*)malloc(sizeof(char*)*50);
+		sprintf(Ser, "%d", data_ptr->movie_ptr->serial_number);
+		sprintf(Yea, "%d", data_ptr->movie_ptr->year);
+		sprintf(Tim, "%d", data_ptr->movie_ptr->movie_time);
+		ser = strcmp(Ser, s2);
+		tit = strcmp(data_ptr->movie_ptr->title, s2);
+		gen = strcmp(data_ptr->movie_ptr->genre, s2);
+		dir = strcmp(data_ptr->movie_ptr->director_m->name, s2);
+		yea = strcmp(Yea, s2);
+		tim = strcmp(Tim, s2);
+		act = strcmp(data_ptr->movie_ptr->actor_m->name, s2);
+		printf("%d %d %d %d %d %d %d\n", ser, tit, gen, dir, yea, tim, act);
+		printf("%d:", data_ptr->movie_ptr->serial_number);
+		printf("%s:", data_ptr->movie_ptr->title);
+		printf("%s:", data_ptr->movie_ptr->genre);
+		printf("%s:", data_ptr->movie_ptr->director_m->name);
+		printf("%d:", data_ptr->movie_ptr->year);
+		printf("%d:", data_ptr->movie_ptr->movie_time);
+		printf("%s\n", data_ptr->movie_ptr->actor_m->name);
+		if(ser * tit * gen * dir * yea * tim * act == 0){
+			printf("%d:", data_ptr->movie_ptr->serial_number);
+			printf("%s:", data_ptr->movie_ptr->title);
+			printf("%s:", data_ptr->movie_ptr->genre);
+			printf("%s:", data_ptr->movie_ptr->director_m->name);
+			printf("%d:", data_ptr->movie_ptr->year);
+			printf("%d:", data_ptr->movie_ptr->movie_time);
+			printf("%s\n", data_ptr->movie_ptr->actor_m->name);
+		}
+		printf("%d\n", i++);
+		if(data_ptr->movie_ptr->next  == NULL)
+			break;
+		printf("%d\n", i);
+		data_ptr->movie_ptr = data_ptr->movie_ptr->next;
+		free(Ser);
+		free(Yea);
+		free(Tim);
+	}
+	return 0;
+}
+
+int dir(struct main_struct_ptr* data_ptr,char *s2){
+	if(strchr(s2, '?') != NULL || strchr(s2, '*') != NULL){
+		QorM_d(data_ptr, s2);
+		return 0;
+	}
+	while(1){
+		printf("wow\n");
+		int ser, nam, sex, bir, mov;
+		char* Ser, *Sex;
+		Ser = (char*)malloc(sizeof(char*)*50);
+		Sex = (char*)malloc(sizeof(char*)*50);
+		sprintf(Ser, "%d", data_ptr->director_ptr->serial_number);
+		sprintf(Sex, "%c", data_ptr->director_ptr->sex);
+		ser = strcmp(Ser, s2);
+		nam = strcmp(data_ptr->director_ptr->name, s2);
+		sex = strcmp(Sex, s2);
+		bir = strcmp(data_ptr->director_ptr->birth, s2);
+		mov = strcmp(data_ptr->director_ptr->movie_d->name, s2);
+		printf("%d %d %d %d %d\n", ser, nam, sex, bir, mov);
+		printf("%d:", data_ptr->director_ptr->serial_number);
+		printf("%s:", data_ptr->director_ptr->name);
+		printf("%c:", data_ptr->director_ptr->sex);
+		printf("%s:", data_ptr->director_ptr->birth);
+		printf("%s\n", data_ptr->director_ptr->movie_d->name);
+		if(ser * nam * sex * bir * mov == 0){
+			printf("%d:", data_ptr->director_ptr->serial_number);
+			printf("%s:", data_ptr->director_ptr->name);
+			printf("%c:", data_ptr->director_ptr->sex);
+			printf("%s:", data_ptr->director_ptr->birth);
+			printf("%s\n", data_ptr->director_ptr->movie_d->name);
+
+		}
+		if(data_ptr->director_ptr->next == NULL)
+			break;
+		data_ptr->director_ptr = data_ptr->director_ptr->next;
+
+
+	}
+	return 0;
+}
+
+int act(struct main_struct_ptr* data_ptr, char *s2){
+	if(strchr(s2, '?') != NULL || strchr(s2, '*') != NULL){
+		QorM_a(data_ptr, s2);
+		return 0;
+	}
+	while(1){
+		struct main_struct_ptr *tmp_data_ptr;
+		tmp_data_ptr = data_ptr;
+		int ser, nam, sex, bir, mov;
+		char* Ser, *Sex;
+		Ser = (char*)malloc(sizeof(char*)*50);
+		Sex = (char*)malloc(sizeof(char*)*50);
+		sprintf(Ser, "%d", data_ptr->actor_ptr->serial_number);
+		sprintf(Sex, "%c", data_ptr->actor_ptr->sex);
+		ser = strcmp(Ser, s2);
+		nam = strcmp(data_ptr->actor_ptr->name, s2);
+		sex = strcmp(Sex, s2);
+		bir = strcmp(data_ptr->actor_ptr->birth, s2);
+		mov = strcmp(data_ptr->actor_ptr->movie_a->name, s2);
+		while(data_ptr->actor_ptr->movie_a->next != NULL){
+			printf("%s %s %d\n", data_ptr->actor_ptr->movie_a->name, s2, mov);
+			printf("%d %d\n", strlen( data_ptr->actor_ptr->movie_a->name), strlen(s2));
+			printf("%d\n", data_ptr->actor_ptr->movie_a->name[4]);
+			data_ptr->actor_ptr->movie_a = data_ptr->actor_ptr->movie_a->next;
+			mov = strcmp(data_ptr->actor_ptr->movie_a->name, s2);
+		}
+		printf("%d %d %d %d %d\n", ser, nam, sex, bir, mov);
+		printf("%d:", data_ptr->actor_ptr->serial_number);
+		printf("%s:", data_ptr->actor_ptr->name);
+		printf("%c:", data_ptr->actor_ptr->sex);
+		printf("%s:", data_ptr->actor_ptr->birth);
+		printf("%s\n", tmp_data_ptr->actor_ptr->movie_a->name);
+		// while(tmp_data_ptr->actor_ptr->movie_a->next != NULL){
+		// 	tmp_data_ptr->actor_ptr->movie_a = tmp_data_ptr->actor_ptr->movie_a->next;
+		// 	printf("%s\n", tmp_data_ptr->actor_ptr->movie_a->name);
+		// }
+		if(ser * nam * sex * bir * mov == 0){
+			printf("%d:", data_ptr->actor_ptr->serial_number);
+			printf("%s:", data_ptr->actor_ptr->name);
+			printf("%c:", data_ptr->actor_ptr->sex);
+			printf("%s:", data_ptr->actor_ptr->birth);
+			printf("%s\n", data_ptr->actor_ptr->movie_a->name);
+		}
+		if(data_ptr->actor_ptr->next == NULL)
+			break;
+
+		data_ptr->actor_ptr = data_ptr->actor_ptr->next;
+
+
+	}
+	return 0;
+}
+
+bool pattern_match(const char *str, const char *pattern) {
+	enum State {
+		Exact,      	// exact match
+		Any,        	// ?
+		AnyRepeat    	// *
+	};
+
+	const char *s = str;
+	const char *p = pattern;
+	const char *q = 0;
+	int state = 0;
+
+	bool match = true;
+	while(match && *p){
+		if(*p == '*'){
+			state = AnyRepeat;
+			q = p+1;
+		}
+		else if(*p == '?')
+			state = Any;
+		else
+			state = Exact;
+
+		if (*s == 0)
+			break;
+
+		switch (state) {
+			case Exact:
+				match = *s == *p;
+				s++;
+				p++;
+				break;
+
+			case Any:
+				match = true;
+				s++;
+				p++;
+				break;
+
+			case AnyRepeat:
+				match = true;
+				s++;
+
+				if (*s == *q)
+					p++;
+
+				break;
+		}
+	}
+
+	if(state == AnyRepeat)
+		return(*s == *q);
+	else if(state == Any)
+		return(*s == *p);
+	else
+		return match && (*s == *p);
+}
+
+void QorM_m(struct main_struct_ptr *data_ptr, char*s2){
+	while(1){
+		int ser, tit, gen, dir, yea, tim, act;
+		char *Ser, *Yea, *Tim;
+		Ser = (char*)malloc(sizeof(char*)*50);
+		Yea = (char*)malloc(sizeof(char*)*50);
+		Tim = (char*)malloc(sizeof(char*)*50);
+		sprintf(Ser, "%d", data_ptr->movie_ptr->serial_number);
+		sprintf(Yea, "%d", data_ptr->movie_ptr->year);
+		sprintf(Tim, "%d", data_ptr->movie_ptr->movie_time);
+		ser = (pattern_match(Ser, s2)) - 1;
+		tit = (pattern_match(data_ptr->movie_ptr->title, s2)) - 1;
+		gen = (pattern_match(data_ptr->movie_ptr->genre, s2)) - 1;
+		dir = (pattern_match(data_ptr->movie_ptr->director_m->name, s2)) - 1;
+		yea = (pattern_match(Yea, s2)) - 1;
+		tim = (pattern_match(Tim, s2)) - 1;
+		act = (pattern_match(data_ptr->movie_ptr->actor_m->name, s2)) - 1;
+		printf("%d %d %d %d %d %d %d\n", ser, tit, gen, dir, yea, tim, act);
+		printf("%d:", data_ptr->movie_ptr->serial_number);
+		printf("%s:", data_ptr->movie_ptr->title);
+		printf("%s:", data_ptr->movie_ptr->genre);
+		printf("%s:", data_ptr->movie_ptr->director_m->name);
+		printf("%d:", data_ptr->movie_ptr->year);
+		printf("%d:", data_ptr->movie_ptr->movie_time);
+		printf("%s\n", data_ptr->movie_ptr->actor_m->name);
+		if(ser * tit * gen * dir * yea * tim * act == 0){
+			printf("%d:", data_ptr->movie_ptr->serial_number);
+			printf("%s:", data_ptr->movie_ptr->title);
+			printf("%s:", data_ptr->movie_ptr->genre);
+			printf("%s:", data_ptr->movie_ptr->director_m->name);
+			printf("%d:", data_ptr->movie_ptr->year);
+			printf("%d:", data_ptr->movie_ptr->movie_time);
+			printf("%s\n", data_ptr->movie_ptr->actor_m->name);
+		}
+		if(data_ptr->movie_ptr->next == NULL)
+			break;
+
+		data_ptr->movie_ptr = data_ptr->movie_ptr->next;
+
+
+	}
+}
+
+void QorM_d(struct main_struct_ptr *data_ptr, char*s2){
+	while(1){
+		int ser, nam, sex, bir, mov;
+		char* Ser, *Sex;
+		Ser = (char*)malloc(sizeof(char*)*50);
+		Sex = (char*)malloc(sizeof(char*)*50);
+		sprintf(Ser, "%d", data_ptr->director_ptr->serial_number);
+		sprintf(Sex, "%c", data_ptr->director_ptr->sex);
+		ser = (pattern_match(Ser, s2)) - 1;
+		nam = (pattern_match(data_ptr->director_ptr->name, s2)) - 1;
+		sex = (pattern_match(Sex, s2)) - 1;
+		bir = (pattern_match(data_ptr->director_ptr->birth, s2)) - 1;
+		mov = (pattern_match(data_ptr->director_ptr->movie_d->name, s2)) - 1;
+		printf("%d %d %d %d %d\n", ser, nam, sex, bir, mov);
+		printf("%d:", data_ptr->director_ptr->serial_number);
+		printf("%s:", data_ptr->director_ptr->name);
+		printf("%c:", data_ptr->director_ptr->sex);
+		printf("%s:", data_ptr->director_ptr->birth);
+		printf("%s\n", data_ptr->director_ptr->movie_d->name);
+
+		if(ser * nam * sex * bir * mov == 0){
+			printf("%d:", data_ptr->director_ptr->serial_number);
+			printf("%s:", data_ptr->director_ptr->name);
+			printf("%c:", data_ptr->director_ptr->sex);
+			printf("%s:", data_ptr->director_ptr->birth);
+			printf("%s\n", data_ptr->director_ptr->movie_d->name);
+		}
+		if(data_ptr->director_ptr->next == NULL)
+			break;
+		data_ptr->director_ptr = data_ptr->director_ptr->next;
+
+
+	}
+}
+
+void QorM_a(struct main_struct_ptr *data_ptr, char*s2){
+	while(1){
+		int ser, nam, sex, bir, mov;
+		char* Ser, *Sex;
+		Ser = (char*)malloc(sizeof(char*)*50);
+		Sex = (char*)malloc(sizeof(char*)*50);
+		sprintf(Ser, "%d", data_ptr->actor_ptr->serial_number);
+		sprintf(Sex, "%c", data_ptr->actor_ptr->sex);
+		ser = (pattern_match(Ser, s2)) - 1;
+		nam = (pattern_match(data_ptr->actor_ptr->name, s2)) - 1;
+		sex = (pattern_match(Sex, s2)) - 1;
+		bir = (pattern_match(data_ptr->actor_ptr->birth, s2)) - 1;
+		mov = (pattern_match(data_ptr->actor_ptr->movie_a->name, s2)) - 1;
+		printf("%d %d %d %d %d\n", ser, nam, sex, bir, mov);
+		printf("%d:", data_ptr->actor_ptr->serial_number);
+		printf("%s:", data_ptr->actor_ptr->name);
+		printf("%c:", data_ptr->actor_ptr->sex);
+		printf("%s:", data_ptr->actor_ptr->birth);
+		printf("%s\n", data_ptr->actor_ptr->movie_a->name);
+
+		if(ser * nam * sex * bir * mov == 0){
+			printf("%d:", data_ptr->actor_ptr->serial_number);
+			printf("%s:", data_ptr->actor_ptr->name);
+			printf("%c:", data_ptr->actor_ptr->sex);
+			printf("%s:", data_ptr->actor_ptr->birth);
+			printf("%s\n", data_ptr->actor_ptr->movie_a->name);
+		}
+		if(data_ptr->actor_ptr->next == NULL)
+			break;
+
+		data_ptr->actor_ptr = data_ptr->actor_ptr->next;
+
+
+	}
+}
+
+void ordersearch(struct main_struct_ptr*data_ptr) {
+	char * s = NULL;
+	char * s1 = NULL;
+	char * s2 = NULL;
+	char * s3 = NULL;
+	// char * string = NULL;
+	char * p,*q,*r;
+	s = (char *)malloc(sizeof(char*));
+	char * order = NULL;
+	printf("명령을 입력하세요 : ");
+	for (int i = 0;1; i++){
+		scanf("%c", (s+i));
+		s = realloc(s, sizeof(char*) * (i+1));
+		if (*(s+i) == '\n') {
+			*(s+i) = 0;
+			break;
+		}
+	}
+	order = (char *)malloc(sizeof(char*) * 50);
+	order = strtok(s, " ");
+	s1 = order;
+	p = (char *)malloc(sizeof(char*) * 50);
+	p = strstr(s1, "search");
+	if (p != NULL)
+		order = strtok(NULL, " ");
+	s2 = order;
+	p = strchr(s2, '-');
+	if(p != NULL){           // 옵션이 있다면
+		p = strchr(s2, 'm');
+		q = strchr(s2, 'd');
+		r = strchr(s2, 'a');
+		order = strtok(NULL, " ");
+		s3 = order;
+		if(p != NULL)   // movie_list 에서 검색
+			mov(data_ptr, s3);
+
+		if(q != NULL)   // director_list에서 검색
+			dir(data_ptr, s3);
+
+		if(r != NULL)  // actor_list 에서 검색
+			act(data_ptr, s3);
+
+	}
+	else{           // 옵션이 없다면
+		//mov(data_ptr, s2);
+		dir(data_ptr, s2);
+		act(data_ptr, s2);
+	}
+}
+
